@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "ts-node ./src/index.ts",
-    "watch": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/index.ts"
+    "dev": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/index.ts"
   },
   "author": "Chris Berry <chrisberry4545@googlemail.com> (http://chrisbdev.com)",
   "license": "ISC"
