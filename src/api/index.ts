@@ -1,3 +1,3 @@
 export {
-  HOLIDAY_RESULTS,
-} from './holiday-result.const';
+  holidayResultsApi,
+} from './holiday-result.api';

@@ -2,7 +2,7 @@ import {
   HolidayResultInterface,
 } from '@chrisb-dev/holiday-shared-models';
 
-export const HOLIDAY_RESULTS = () => ({
+export const holidayResultsApi = () => ({
   getHoliday: (): HolidayResultInterface[] => {
     return [{
       country: 'Costa Rica',

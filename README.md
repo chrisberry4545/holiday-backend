@@ -6,5 +6,9 @@ Backend to holiday app (https://github.com/chrisberry4545/holiday)
 
 To run with live reloads
 
+`npm run watch`
+
+To run without watch
+
 `npm start`
 
