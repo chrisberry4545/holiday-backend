@@ -6,6 +6,8 @@ export const HOLIDAY_RESULTS = () => ({
   getHoliday: (): HolidayResultInterface[] => {
     return [{
       country: 'Costa Rica',
-    }]
+    }, {
+      country: 'Mexico',
+    }];
   },
 });
