@@ -11,6 +11,15 @@ import {
 const app = express();
 const port = process.env.PORT || 5000;
 
+app.use((req, res, next) => {
+  if ('/robots.txt' == req.url) {
+    res.type('text/plain')
+    res.send("User-agent: *\nDisallow: /");
+  } else {
+    next();
+  }
+});
+
 app.use(function (req, res, next) {
 
   // Website you wish to allow to connect
