@@ -1,5 +1,7 @@
 import * as express from 'express';
 
+import * as bodyParser from 'body-parser';
+
 import {
   holidayResultsApi,
 } from './api';
@@ -18,13 +20,15 @@ const port = process.env.PORT || 5000;
 
 robotsMiddleware(app);
 corsMiddleware(app);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   res.send('\n\nHoliday backend\n\n');
 });
 
-app.get(`/${API_URLS.HOLIDAY_RESULTS}`, (req, res) => {
-  res.send(holidayResultsApi().getHoliday());
+app.post(`/${API_URLS.HOLIDAY_RESULTS}`, (req, res) => {
+  res.send(holidayResultsApi().getHoliday(req.body));
 });
 
 app.listen(port, () => {
