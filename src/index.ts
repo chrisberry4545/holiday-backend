@@ -14,7 +14,7 @@ import {
 } from '@chrisb-dev/holiday-shared-models';
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5500;
 
 robotsMiddleware(app);
 corsMiddleware(app);
