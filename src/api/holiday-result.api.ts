@@ -1,6 +1,6 @@
 import {
-  CountryInterface,
   ContinentInterface,
+  CountryInterface,
   HolidayInterface,
   UserInputInterface,
 } from '@chrisb-dev/holiday-shared-models';
@@ -44,20 +44,20 @@ const possibleFoodTypes = [{
 }];
 
 const foodTypesToCountryMap = [{
-  foodTypeId: '1',
   countryId: '1',
-}, {
   foodTypeId: '1',
-  countryId: '1',
 }, {
-  foodTypeId: '2',
+  countryId: '1',
+  foodTypeId: '1',
+}, {
   countryId: '2',
-}, {
   foodTypeId: '2',
-  countryId: '3',
 }, {
-  foodTypeId: '3',
+  countryId: '3',
+  foodTypeId: '2',
+}, {
   countryId: '1',
+  foodTypeId: '3',
 }];
 
 const hydrateHolidayDb = (holidayDb: HolidayDBInterface): HolidayInterface => {
@@ -71,26 +71,25 @@ const hydrateHolidayDb = (holidayDb: HolidayDBInterface): HolidayInterface => {
   return {
     activities: [],
     country: countries.find((country) => country.id === holidayDb.countryId),
-    name: holidayDb.name,
-    id: holidayDb.id,
     foodTypes,
+    id: holidayDb.id,
+    name: holidayDb.name,
   };
 };
 
 export const holidayResultsApi = () => ({
   getHoliday: (userInput: UserInputInterface): HolidayInterface[] => {
-    console.log('Received user input', userInput);
     const allHolidays: HolidayDBInterface[] = [{
-      id: '1',
       countryId: '1',
+      id: '1',
       name: 'Costa Rica Holiday',
     }, {
-      id: '2',
       countryId: '2',
+      id: '2',
       name: 'Mexico Holiday',
     }, {
-      id: '3',
       countryId: '3',
+      id: '3',
       name: 'China Holiday',
     }];
     const populatedHolidays = allHolidays.map(hydrateHolidayDb);
@@ -100,7 +99,7 @@ export const holidayResultsApi = () => ({
         .map((foodType) => foodType.id);
       return userInput.selectedFoodTypeIds.some((foodTypeId) => (
         holidayFoodTypeIds.includes(foodTypeId)
-      ))
+      ));
     });
   },
 });

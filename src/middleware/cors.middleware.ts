@@ -6,7 +6,7 @@ const allowedDomains = [
 ];
 
 export const corsMiddleware = (app: Express) => {
-  app.use(function (req, res, next) {
+  app.use((req, res, next) => {
 
     const requestFrom = req.headers.origin as string;
 

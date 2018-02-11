@@ -16,6 +16,10 @@ import {
   API_URLS,
 } from '@chrisb-dev/holiday-shared-models';
 
+import {
+  LOGGER,
+} from './utilities';
+
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -37,5 +41,5 @@ app.post(`/${API_URLS.HOLIDAY_RESULTS}`, (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`listening on port ${port}`);
+  LOGGER.log(`listening on port ${port}`);
 });

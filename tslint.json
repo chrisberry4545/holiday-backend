@@ -1,0 +1,13 @@
+{
+  "extends": "tslint:recommended",
+  "rules": {
+      "max-line-length": {
+          "options": [80]
+      },
+      "quotemark": [true, "single"],
+      "import-spacing": false,
+      "variable-name": [true, "ban-keywords", "allow-leading-underscore"],
+      "interface-name": [false],
+      "no-empty-interface": [false]
+  }
+}
