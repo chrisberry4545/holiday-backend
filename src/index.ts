@@ -39,7 +39,9 @@ app.get(`/${API_URLS.USER_INPUT_FORM_DATA}`, (req, res) => {
 });
 
 app.post(`/${API_URLS.HOLIDAY_RESULTS}`, (req, res) => {
-  res.send(holidayResultsApi().getHoliday(req.body));
+  holidayResultsApi().getHoliday(req.body).then((holidays) => {
+    res.send(holidays);
+  });
 });
 
 app.listen(port, () => {
