@@ -5,8 +5,10 @@
   "main": "index.js",
   "dependencies": {
     "@chrisb-dev/holiday-shared-models": "1.0.13",
+    "@types/mongodb": "^3.0.5",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "mongodb": "^3.0.2",
     "ts-node": "^4.1.0",
     "typescript": "^2.7.1"
   },
@@ -22,7 +24,8 @@
   "scripts": {
     "start": "ts-node ./src/index.ts",
     "dev": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/index.ts",
-    "lint": "./node_modules/.bin/tslint -c tslint.json 'src/**/*.ts'"
+    "lint": "./node_modules/.bin/tslint -c tslint.json 'src/**/*.ts'",
+    "init-db": "./node_modules/.bin/ts-node ./src/db/init-db/index.ts"
   },
   "author": "Chris Berry <chrisberry4545@googlemail.com> (http://chrisbdev.com)",
   "license": "ISC"
