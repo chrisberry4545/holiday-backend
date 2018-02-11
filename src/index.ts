@@ -4,6 +4,7 @@ import * as bodyParser from 'body-parser';
 
 import {
   holidayResultsApi,
+  userInputFormDataApi,
 } from './api';
 
 import {
@@ -25,6 +26,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   res.send('\n\nHoliday backend\n\n');
+});
+
+app.get(`/${API_URLS.USER_INPUT_FORM_DATA}`, (req, res) => {
+  res.send(userInputFormDataApi().getUserInputFormData());
 });
 
 app.post(`/${API_URLS.HOLIDAY_RESULTS}`, (req, res) => {
