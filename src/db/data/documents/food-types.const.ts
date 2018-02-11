@@ -2,7 +2,7 @@ import {
   FoodTypeInterface,
 } from '@chrisb-dev/holiday-shared-models';
 
-export const POSSIBLE_FOOD_TYPES: FoodTypeInterface[] = [{
+export const FOOD_TYPES: FoodTypeInterface[] = [{
   id: '1',
   name: 'Spicy',
 }, {

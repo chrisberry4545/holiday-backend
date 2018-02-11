@@ -2,7 +2,7 @@ import {
   FlightTimesInterface,
 } from '@chrisb-dev/holiday-shared-models';
 
-export const POSSIBLE_FLIGHT_TIMES: FlightTimesInterface[] = [{
+export const FLIGHT_TIMES: FlightTimesInterface[] = [{
   id: '1',
   name: '1 - 2 hours',
 }, {

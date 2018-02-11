@@ -33,7 +33,9 @@ app.get('/', (req, res) => {
 });
 
 app.get(`/${API_URLS.USER_INPUT_FORM_DATA}`, (req, res) => {
-  res.send(userInputFormDataApi().getUserInputFormData());
+  userInputFormDataApi().getUserInputFormData().then((results) => {
+    res.send(results);
+  });
 });
 
 app.post(`/${API_URLS.HOLIDAY_RESULTS}`, (req, res) => {

@@ -1,5 +1,5 @@
 export const LOGGER = {
-  log: (...message: string[]) => {
+  log: (...message: any[]) => {
     // tslint:disable-next-line
     console.log(message.join(' '));
   },
