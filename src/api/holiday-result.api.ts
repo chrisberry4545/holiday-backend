@@ -8,7 +8,7 @@ import {
 import {
   COLLECTIONS,
   connectDb,
-  readData,
+  readDataWithCache,
 } from './../db';
 
 export const holidayResultsApi = () => ({
@@ -26,7 +26,7 @@ export const holidayResultsApi = () => ({
 
   getHoliday: (userInput: UserInputInterface): Promise<HolidayInterface[]> => {
     return connectDb().then((db) => {
-      return readData<HolidayInterface>(
+      return readDataWithCache<HolidayInterface>(
         db, COLLECTIONS.HOLIDAYS,
       ).then((holidays) => {
         return holidayResultsApi().filterHolidaysWithFoodType(

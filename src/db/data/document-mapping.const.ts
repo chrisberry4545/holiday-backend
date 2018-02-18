@@ -1,9 +1,12 @@
 import {
+  ACTIVITY_CATEGORIES,
   COLLECTIONS,
+  COST_RANGES,
   COUNTRIES,
   FLIGHT_TIMES,
   FOOD_TYPES,
   HOLIDAYS,
+  TEMPERATURES,
 } from './';
 
 interface DocumentMapping {
@@ -22,6 +25,12 @@ const convertMapToArray = <T>(obj: {[key: string]: T}) => {
 };
 
 export const DOCUMENT_MAPPINGS: DocumentMapping[] = [{
+  collectionName: COLLECTIONS.ACTIVITY_CATEGORIES,
+  data: convertMapToArray(ACTIVITY_CATEGORIES),
+}, {
+  collectionName: COLLECTIONS.COST_RANGES,
+  data: convertMapToArray(COST_RANGES),
+}, {
   collectionName: COLLECTIONS.FOOD_TYPES,
   data: convertMapToArray(FOOD_TYPES),
 }, {
@@ -33,4 +42,7 @@ export const DOCUMENT_MAPPINGS: DocumentMapping[] = [{
 }, {
   collectionName: COLLECTIONS.HOLIDAYS,
   data: convertMapToArray(HOLIDAYS),
+}, {
+  collectionName: COLLECTIONS.TEMPERATURE,
+  data: convertMapToArray(TEMPERATURES),
 }];

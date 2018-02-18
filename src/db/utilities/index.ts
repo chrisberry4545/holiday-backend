@@ -5,3 +5,5 @@ export * from './create-documents';
 export * from './drop-collection';
 
 export * from './read-data';
+
+export * from './read-data-with-cache';

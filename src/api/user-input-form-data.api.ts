@@ -1,28 +1,54 @@
 import {
+  ActivityCategoryInterface,
+  CostRangeInterface,
   FlightTimesInterface,
   FoodTypeInterface,
   FormOptionsInterface,
+  TemperatureInterface,
 } from '@chrisb-dev/holiday-shared-models';
 
 import {
+  ACTIVITY_CATEGORIES,
   COLLECTIONS,
   connectDb,
-  readData,
+  COST_RANGES,
+  FLIGHT_TIMES,
+  FOOD_TYPES,
+  readDataWithCache,
 } from './../db';
 
 export const userInputFormDataApi = () => ({
   getUserInputFormData: (): Promise<FormOptionsInterface> => {
     return connectDb().then((db) => {
+      const activitiesCategoryRead =
+        readDataWithCache<ActivityCategoryInterface>(
+          db, COLLECTIONS.ACTIVITY_CATEGORIES,
+        );
+      const costRangesRead =
+        readDataWithCache<CostRangeInterface>(db, COLLECTIONS.COST_RANGES);
       const flightTimeRead =
-        readData<FlightTimesInterface>(db, COLLECTIONS.FLIGHT_TIMES);
+        readDataWithCache<FlightTimesInterface>(db, COLLECTIONS.FLIGHT_TIMES);
       const foodTypesRead =
-        readData<FoodTypeInterface>(db, COLLECTIONS.FOOD_TYPES);
+        readDataWithCache<FoodTypeInterface>(db, COLLECTIONS.FOOD_TYPES);
+      const temperaturesRead =
+        readDataWithCache<TemperatureInterface>(db, COLLECTIONS.TEMPERATURE);
 
-      return Promise.all([flightTimeRead, foodTypesRead])
-      .then(([flightTimes, foodTypes]) => {
+
+      return Promise.all([
+        activitiesCategoryRead, costRangesRead,flightTimeRead,
+        foodTypesRead, temperaturesRead,
+      ])
+      .then(([
+        possibleActivities, possibleCostRanges,
+        possibleFlightTimes, possibleFoodTypes,
+        possibleTemperatures,
+      ]) => {
         return {
-          possibleFlightTimes: flightTimes,
-          possibleFoodTypes: foodTypes,
+          possibleActivities,
+          possibleCostRanges,
+          possibleFlightTimes,
+          possibleFoodTypes,
+          possibleTemperatures,
         };
       });
     });
