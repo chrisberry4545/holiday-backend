@@ -113,7 +113,8 @@ export const holidayResultsApi = () => ({
     const userFlightTime = flightTimesRead.find((flighTime) => (
       flighTime._id === userInput.selectedFlightTimeId
     ));
-    return holiday.flight.flightTime.timeMaxMinutes <
+    return userFlightTime &&
+      holiday.flight.flightTime.timeMaxMinutes <
       userFlightTime.timeMaxMinutes
       ?
       300 : 0;
