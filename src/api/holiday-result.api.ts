@@ -42,7 +42,7 @@ export const holidayResultsApi = () => ({
       possibleCostRange._id === userInput.selectedCostRangeId
     ));
     const holidayCost = holidayResultsApi().calculateCost(holiday);
-    return holidayCost < costRange.maxCost ? 300 : 0;
+    return costRange && holidayCost < costRange.maxCost ? 300 : 0;
   },
 
   /**
