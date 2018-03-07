@@ -79,7 +79,7 @@ export const holidayResultsApi = () => ({
     ));
     const holidayFoodScoreOutOf100 = holiday.country.foodScore * 10;
     return holidayFoodScoreOutOf100 * (
-      userFoodImportance.value || 1
+      (userFoodImportance && userFoodImportance.value) || 1
     );
   },
 
