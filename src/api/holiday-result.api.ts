@@ -8,6 +8,7 @@ import {
   CostRangeInterface,
   CountryInterface,
   FlightTimesInterface,
+  FoodImportanceInterface,
   HolidayInterface,
   UserInputInterface,
 } from '@chrisb-dev/holiday-shared-models';
@@ -64,13 +65,21 @@ export const holidayResultsApi = () => ({
   /**
    * Maximum score increase of 300
    */
-  getFoodScore(
+  async getFoodScore(
     holiday: HolidayInterface,
     userInput: UserInputInterface,
+    db: Db,
   ) {
+    const foodImportanceRead =
+      await readDataWithCache<FoodImportanceInterface>(
+        db, COLLECTIONS.COST_RANGES,
+      );
+    const userFoodImportance = foodImportanceRead.find((foodImportance) => (
+      foodImportance._id === userInput.selectedFoodImportanceId
+    ));
     const holidayFoodScoreOutOf100 = holiday.country.foodScore * 10;
     return holidayFoodScoreOutOf100 * (
-      userInput.howImportantIsFood || 1
+      userFoodImportance.value || 1
     );
   },
 
@@ -115,36 +124,39 @@ export const holidayResultsApi = () => ({
     userInput: UserInputInterface,
     db: Db,
   ): Promise<number> {
-    let score = 100;
-
-    score += holidayResultsApi().getActivityScore(
+    const activityScore = holidayResultsApi().getActivityScore(
       holiday,
       userInput,
     );
 
-    score += holidayResultsApi().getFoodScore(
+    const temperatureScore = holidayResultsApi().getTemperatureScore(
       holiday,
       userInput,
     );
 
-    score += holidayResultsApi().getTemperatureScore(
-      holiday,
-      userInput,
-    );
-
-    score += await holidayResultsApi().getFlightTimesScore(
-      holiday,
-      userInput,
-      db,
-    );
-
-    score += await holidayResultsApi().getCostScore(
-      holiday,
-      userInput,
-      db,
-    );
-
-    return score;
+    return Promise.all([
+      holidayResultsApi().getFoodScore(
+        holiday,
+        userInput,
+        db,
+      ),
+      holidayResultsApi().getFlightTimesScore(
+        holiday,
+        userInput,
+        db,
+      ),
+      holidayResultsApi().getCostScore(
+        holiday,
+        userInput,
+        db,
+      ),
+    ]).then(([foodScore, flightScore, costScore]) => {
+      return activityScore
+        + temperatureScore
+        + foodScore
+        + flightScore
+        + costScore;
+    });
   },
 
   getHolidaysInOrderOfScore(

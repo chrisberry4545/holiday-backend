@@ -4,6 +4,7 @@ import {
   COST_RANGES,
   COUNTRIES,
   FLIGHT_TIMES,
+  FOOD_IMPORTANCE,
   FOOD_TYPES,
   HOLIDAYS,
   TEMPERATURES,
@@ -30,6 +31,9 @@ export const DOCUMENT_MAPPINGS: DocumentMapping[] = [{
 }, {
   collectionName: COLLECTIONS.COST_RANGES,
   data: convertMapToArray(COST_RANGES),
+}, {
+  collectionName: COLLECTIONS.FOOD_IMPORTANCE,
+  data: convertMapToArray(FOOD_IMPORTANCE),
 }, {
   collectionName: COLLECTIONS.FOOD_TYPES,
   data: convertMapToArray(FOOD_TYPES),

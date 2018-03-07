@@ -2,7 +2,7 @@ import {
   ActivityCategoryInterface,
   CostRangeInterface,
   FlightTimesInterface,
-  FoodTypeInterface,
+  FoodImportanceInterface,
   FormOptionsInterface,
   TemperatureInterface,
 } from '@chrisb-dev/holiday-shared-models';
@@ -28,26 +28,28 @@ export const userInputFormDataApi = () => ({
         readDataWithCache<CostRangeInterface>(db, COLLECTIONS.COST_RANGES);
       const flightTimeRead =
         readDataWithCache<FlightTimesInterface>(db, COLLECTIONS.FLIGHT_TIMES);
-      const foodTypesRead =
-        readDataWithCache<FoodTypeInterface>(db, COLLECTIONS.FOOD_TYPES);
+      const foodImportanceRead =
+        readDataWithCache<FoodImportanceInterface>(
+          db, COLLECTIONS.FOOD_IMPORTANCE,
+        );
       const temperaturesRead =
         readDataWithCache<TemperatureInterface>(db, COLLECTIONS.TEMPERATURE);
 
 
       return Promise.all([
-        activitiesCategoryRead, costRangesRead,flightTimeRead,
-        foodTypesRead, temperaturesRead,
+        activitiesCategoryRead, costRangesRead, flightTimeRead,
+        foodImportanceRead, temperaturesRead,
       ])
       .then(([
         possibleActivities, possibleCostRanges,
-        possibleFlightTimes, possibleFoodTypes,
+        possibleFlightTimes, possibleFoodImportantOptions,
         possibleTemperatures,
       ]) => {
         return {
           possibleActivities,
           possibleCostRanges,
           possibleFlightTimes,
-          possibleFoodTypes,
+          possibleFoodImportantOptions,
           possibleTemperatures,
         };
       });
