@@ -15,6 +15,7 @@ export const COUNTRIES: {[key: string]: CountryInterface} = {
   CHINA: {
     _id: '3',
     continent: CONTINENTS.ASIA,
+    foodScore: 10,
     foodTypes: [FOOD_TYPES.MACDONALDS, FOOD_TYPES.SPICY],
     monthlyTemperatures: {
       0: TEMPERATURES.TEN_TO_TWENTY,
@@ -35,6 +36,7 @@ export const COUNTRIES: {[key: string]: CountryInterface} = {
   COSTA_RICA: {
     _id: '1',
     continent: CONTINENTS.CENTRAL_AMERICA,
+    foodScore: 7,
     foodTypes: [FOOD_TYPES.MACDONALDS, FOOD_TYPES.MEDITERRANEAN],
     monthlyTemperatures: {
       0: TEMPERATURES.TEN_TO_TWENTY,
@@ -55,6 +57,7 @@ export const COUNTRIES: {[key: string]: CountryInterface} = {
   MEXICO: {
     _id: '2',
     continent: CONTINENTS.CENTRAL_AMERICA,
+    foodScore: 10,
     foodTypes: [FOOD_TYPES.MACDONALDS, FOOD_TYPES.MIDDLE_EASTERN],
     monthlyTemperatures: {
       0: TEMPERATURES.TEN_TO_TWENTY,

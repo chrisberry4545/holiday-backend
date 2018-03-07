@@ -23,7 +23,7 @@ export const HOLIDAYS: {[key: string]: HolidayInterface} = {
     activities: [],
     country: COUNTRIES.COSTA_RICA,
     flight: {
-      cost: 300,
+      cost: 600,
       flightTime: FLIGHT_TIMES.ONE_TO_TWO,
     },
     name: 'Costa Rica holiday',
