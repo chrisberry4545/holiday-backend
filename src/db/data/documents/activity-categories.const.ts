@@ -3,12 +3,20 @@ import {
 } from '@chrisb-dev/holiday-shared-models';
 
 export const ACTIVITY_CATEGORIES: {[key: string]: ActivityCategoryInterface} = {
-  SNOW_SPORTS: {
+  ADVENTURE: {
     _id: '1',
-    name: 'snow sports',
+    name: 'Adventure',
   },
-  WALKING: {
+  BEACH: {
     _id: '2',
-    name: 'walking',
+    name: 'Beach',
+  },
+  CULTURE: {
+    _id: '3',
+    name: 'Culture',
+  },
+  SPORTS: {
+    _id: '4',
+    name: 'Sports',
   },
 };

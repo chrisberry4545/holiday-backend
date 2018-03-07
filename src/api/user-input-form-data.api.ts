@@ -35,7 +35,6 @@ export const userInputFormDataApi = () => ({
       const temperaturesRead =
         readDataWithCache<TemperatureInterface>(db, COLLECTIONS.TEMPERATURE);
 
-
       return Promise.all([
         activitiesCategoryRead, costRangesRead, flightTimeRead,
         foodImportanceRead, temperaturesRead,
