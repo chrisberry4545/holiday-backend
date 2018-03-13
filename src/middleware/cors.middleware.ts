@@ -2,7 +2,7 @@ import { Express } from 'express';
 
 const allowedDomains = [
   'http://localhost:3000',
-  'http://agitated-visvesvaraya-4a0d81.bitballoon.com',
+  'https://holiday-app.herokuapp.com',
 ];
 
 export const corsMiddleware = (app: Express) => {
