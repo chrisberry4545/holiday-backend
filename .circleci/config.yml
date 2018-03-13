@@ -55,7 +55,15 @@ workflows:
       - lint:
           requires:
             - build
+          filters:
+            branches:
+              only:
+                - master
       - deploy:
           requires:
             - lint
             - bundle
+          filters:
+            branches:
+              only:
+                - master
