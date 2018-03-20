@@ -82,7 +82,7 @@ export const COUNTRIES: {[key: string]: CountryInterface} = {
       _id: '7',
       name: 'The offical name for Mexico is the United Mexican States',
     }],
-    foodScore: 10,
+    foodScore: 7,
     foodTypes: [FOOD_TYPES.MACDONALDS, FOOD_TYPES.MIDDLE_EASTERN],
     monthlyTemperatures: {
       0: TEMPERATURES.TEN_TO_TWENTY,
