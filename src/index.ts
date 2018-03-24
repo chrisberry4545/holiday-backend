@@ -3,6 +3,7 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 
 import {
+  dataAccessApi,
   holidayResultsApi,
   userInputFormDataApi,
 } from './api';
@@ -34,13 +35,21 @@ app.get('/', (req, res) => {
 
 app.get(`/${API_URLS.USER_INPUT_FORM_DATA}`, (req, res) => {
   userInputFormDataApi().getUserInputFormData().then((results) => {
-    res.send(results);
+    setTimeout(() => {
+      res.send(results);
+    }, 10000);
   });
 });
 
 app.post(`/${API_URLS.HOLIDAY_RESULTS}`, (req, res) => {
   holidayResultsApi().getHoliday(req.body).then((holidays) => {
     res.send(holidays);
+  });
+});
+
+app.get('/data', (req, res) => {
+  dataAccessApi().getAllData().then((data) => {
+    res.send(data);
   });
 });
 

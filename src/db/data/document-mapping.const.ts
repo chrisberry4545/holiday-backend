@@ -1,6 +1,7 @@
 import {
   ACTIVITY_CATEGORIES,
   COLLECTIONS,
+  CONTINENTS,
   COST_RANGES,
   COUNTRIES,
   FLIGHT_TIMES,
@@ -28,6 +29,9 @@ const convertMapToArray = <T>(obj: {[key: string]: T}) => {
 export const DOCUMENT_MAPPINGS: DocumentMapping[] = [{
   collectionName: COLLECTIONS.ACTIVITY_CATEGORIES,
   data: convertMapToArray(ACTIVITY_CATEGORIES),
+}, {
+  collectionName: COLLECTIONS.CONTINENTS,
+  data: convertMapToArray(CONTINENTS),
 }, {
   collectionName: COLLECTIONS.COST_RANGES,
   data: convertMapToArray(COST_RANGES),

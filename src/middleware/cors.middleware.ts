@@ -3,6 +3,7 @@ import { Express } from 'express';
 const allowedDomains = [
   'http://localhost:3000',
   'https://holiday-app.herokuapp.com',
+  'https://holiday-data-entry.herokuapp.com',
 ];
 
 export const corsMiddleware = (app: Express) => {
