@@ -5,7 +5,9 @@
   "main": "index.js",
   "dependencies": {
     "@chrisb-dev/holiday-shared-models": "1.0.39",
+    "@types/dotenv": "^4.0.2",
     "body-parser": "^1.18.2",
+    "dotenv": "^5.0.1",
     "express": "^4.16.2",
     "mongodb": "^3.0.2",
     "ts-node": "^4.1.0",

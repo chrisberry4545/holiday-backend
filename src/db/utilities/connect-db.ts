@@ -3,20 +3,23 @@ import {
   MongoClient,
 } from 'mongodb';
 
-const url = 'mongodb://localhost:27017/';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
-const DB_NAME = 'holiday-db';
+const url = `mongodb://` +
+  `${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}` +
+  `@ds123799.mlab.com:23799/holidays`;
+
+const DB_NAME = 'holidays';
 
 export const connectDb = (): Promise<Db> => {
   return new Promise((resolve, reject) => {
-    // Temporarily go without DB
-    resolve(null);
-    // MongoClient.connect(url, (connectError, db) => {
-    //   if (connectError) {
-    //     reject(connectError);
-    //     throw connectError;
-    //   }
-    //   resolve(db.db(DB_NAME));
-    // });
+    MongoClient.connect(url, (connectError, db) => {
+      if (connectError) {
+        reject(connectError);
+        throw connectError;
+      }
+      resolve(db.db(DB_NAME));
+    });
   });
 };
