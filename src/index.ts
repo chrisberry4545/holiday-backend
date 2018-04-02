@@ -35,9 +35,7 @@ app.get('/', (req, res) => {
 
 app.get(`/${API_URLS.USER_INPUT_FORM_DATA}`, (req, res) => {
   userInputFormDataApi().getUserInputFormData().then((results) => {
-    setTimeout(() => {
-      res.send(results);
-    }, 10000);
+    res.send(results);
   });
 });
 
