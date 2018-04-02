@@ -13,6 +13,7 @@ import {
   COLLECTIONS,
   connectDb,
   readDataWithCache,
+  writeData,
 } from './../db';
 
 export const dataAccessApi = () => ({
@@ -78,6 +79,17 @@ export const dataAccessApi = () => ({
         holidays,
         temperature,
       };
+    });
+  },
+
+  saveHolidayData: (holidayData: HolidayInterface): Promise<void> => {
+    return connectDb().then((db) => {
+      return writeData(
+        db,
+        COLLECTIONS.HOLIDAYS,
+        { _id: holidayData._id },
+        holidayData,
+      );
     });
   },
 });

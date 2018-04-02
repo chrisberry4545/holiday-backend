@@ -51,6 +51,12 @@ app.get('/data', (req, res) => {
   });
 });
 
+app.post('/data', (req, res) => {
+  dataAccessApi().saveHolidayData(req.body).then(() => {
+    res.send();
+  });
+});
+
 app.listen(port, () => {
   LOGGER.log(`listening on port ${port}`);
 });
