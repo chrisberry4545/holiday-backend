@@ -14,9 +14,11 @@ export const readDataWithCache = <T>(
   db: Db,
   collectionName: string,
 ): Promise<T[]> => {
-  const cachedData = DOCUMENT_MAPPINGS.find((mapping) => (
-    mapping.collectionName === collectionName
-  ));
+  // Temporarily disabled cache
+  // const cachedData = DOCUMENT_MAPPINGS.find((mapping) => (
+  //   mapping.collectionName === collectionName
+  // ));
+  const cachedData: { data: {} } = null;
   return cachedData ? new Promise((resolve) => {
     resolve(cachedData.data as any);
   })
