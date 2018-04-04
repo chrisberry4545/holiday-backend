@@ -51,8 +51,14 @@ app.get('/data', (req, res) => {
   });
 });
 
-app.post('/data', (req, res) => {
+app.patch('/data', (req, res) => {
   dataAccessApi().saveHolidayData(req.body).then(() => {
+    res.send();
+  });
+});
+
+app.post('/data', (req, res) => {
+  dataAccessApi().createNewHoliday(req.body).then(() => {
     res.send();
   });
 });

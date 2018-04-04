@@ -6,7 +6,7 @@ import {
   LOGGER,
 } from './../../utilities';
 
-export const writeData = <T>(
+export const updateData = <T>(
   db: Db,
   collectionName: string,
   whereObject: { _id: string },
@@ -21,7 +21,7 @@ export const writeData = <T>(
           LOGGER.log(`Error when inserting document:`, error);
           reject();
         } else {
-          LOGGER.log(`Inserted document into ${collectionName}`);
+          LOGGER.log(`Updated document with id: ${whereObject._id}`);
           resolve();
         }
       },

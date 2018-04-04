@@ -10,10 +10,11 @@ import {
 } from '@chrisb-dev/holiday-shared-models';
 
 import {
+  addData,
   COLLECTIONS,
   connectDb,
   readDataWithCache,
-  writeData,
+  updateData,
 } from './../db';
 
 export const dataAccessApi = () => ({
@@ -84,11 +85,21 @@ export const dataAccessApi = () => ({
 
   saveHolidayData: (holidayData: HolidayInterface): Promise<void> => {
     return connectDb().then((db) => {
-      return writeData(
+      return updateData(
         db,
         COLLECTIONS.HOLIDAYS,
         { _id: holidayData._id },
         holidayData,
+      );
+    });
+  },
+
+  createNewHoliday: (holiday: HolidayInterface): Promise<void> => {
+    return connectDb().then((db) => {
+      return addData(
+        db,
+        COLLECTIONS.HOLIDAYS,
+        holiday,
       );
     });
   },
