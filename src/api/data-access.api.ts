@@ -103,4 +103,25 @@ export const dataAccessApi = () => ({
       );
     });
   },
+
+  saveCountryData: (countryData: CountryInterface): Promise<void> => {
+    return connectDb().then((db) => {
+      return updateData(
+        db,
+        COLLECTIONS.COUNTIRES,
+        { _id: countryData._id },
+        countryData,
+      );
+    });
+  },
+
+  createNewCountry: (countryData: CountryInterface): Promise<void> => {
+    return connectDb().then((db) => {
+      return addData(
+        db,
+        COLLECTIONS.COUNTIRES,
+        countryData,
+      );
+    });
+  },
 });

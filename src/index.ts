@@ -63,6 +63,18 @@ app.post('/data', (req, res) => {
   });
 });
 
+app.patch('/data/country', (req, res) => {
+  dataAccessApi().saveCountryData(req.body).then(() => {
+    res.send();
+  });
+});
+
+app.post('/data/country', (req, res) => {
+  dataAccessApi().createNewCountry(req.body).then(() => {
+    res.send();
+  });
+});
+
 app.listen(port, () => {
   LOGGER.log(`listening on port ${port}`);
 });
