@@ -15,15 +15,12 @@ export const COUNTRIES: {[key: string]: CountryInterface} = {
   CHINA: {
     _id: '3',
     continent: CONTINENTS.ASIA,
-    facts: [{
-      _id: '1',
-      name: 'China is the highest population of any country in the world',
-    }, {
-      _id: '2',
-      name: 'China has 4 times as many people as the USA',
-    }],
     foodScore: 10,
     foodTypes: [FOOD_TYPES.MACDONALDS, FOOD_TYPES.SPICY],
+    latLng: {
+      lat: '0',
+      lng: '0',
+    },
     monthlyTemperatures: {
       0: TEMPERATURES.TEN_TO_TWENTY,
       1: TEMPERATURES.TEN_TO_TWENTY,
@@ -43,22 +40,12 @@ export const COUNTRIES: {[key: string]: CountryInterface} = {
   COSTA_RICA: {
     _id: '1',
     continent: CONTINENTS.CENTRAL_AMERICA,
-    facts: [{
-      _id: '3',
-      name: 'Sloths live here',
-    }, {
-      _id: '4',
-      name: 'Costa ricans calls themselves Ticos and Ticas',
-    }, {
-      _id: '5',
-      name: 'The average life expectancy is 77 years. This is one of' +
-      ' the highest in the world',
-    }, {
-      _id: '6',
-      name: 'Costa Rica has no standing army',
-    }],
     foodScore: 7,
     foodTypes: [FOOD_TYPES.MACDONALDS, FOOD_TYPES.MEDITERRANEAN],
+    latLng: {
+      lat: '0',
+      lng: '0',
+    },
     monthlyTemperatures: {
       0: TEMPERATURES.TEN_TO_TWENTY,
       1: TEMPERATURES.TEN_TO_TWENTY,
@@ -78,12 +65,12 @@ export const COUNTRIES: {[key: string]: CountryInterface} = {
   MEXICO: {
     _id: '2',
     continent: CONTINENTS.CENTRAL_AMERICA,
-    facts: [{
-      _id: '7',
-      name: 'The offical name for Mexico is the United Mexican States',
-    }],
     foodScore: 7,
     foodTypes: [FOOD_TYPES.MACDONALDS, FOOD_TYPES.MIDDLE_EASTERN],
+    latLng: {
+      lat: '0',
+      lng: '0',
+    },
     monthlyTemperatures: {
       0: TEMPERATURES.TEN_TO_TWENTY,
       1: TEMPERATURES.TEN_TO_TWENTY,
