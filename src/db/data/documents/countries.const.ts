@@ -39,7 +39,7 @@ export const COUNTRIES: {[key: string]: CountryInterface} = {
   },
   COSTA_RICA: {
     _id: '1',
-    continent: CONTINENTS.CENTRAL_AMERICA,
+    continent: CONTINENTS.SOUTH_AMERICA,
     foodScore: 7,
     foodTypes: [FOOD_TYPES.MACDONALDS, FOOD_TYPES.MEDITERRANEAN],
     latLng: {
@@ -64,7 +64,7 @@ export const COUNTRIES: {[key: string]: CountryInterface} = {
   },
   MEXICO: {
     _id: '2',
-    continent: CONTINENTS.CENTRAL_AMERICA,
+    continent: CONTINENTS.NORTH_AMERICA,
     foodScore: 7,
     foodTypes: [FOOD_TYPES.MACDONALDS, FOOD_TYPES.MIDDLE_EASTERN],
     latLng: {

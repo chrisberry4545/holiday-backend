@@ -18,6 +18,7 @@ import {
 } from './../db';
 
 export const dataAccessApi = () => ({
+
   getGeneralData: <T>(collectionName: string): Promise<T[]> => {
     return connectDb().then((db) => {
       return readDataWithCache<T>(db, collectionName).then((data) => data);
@@ -104,15 +105,28 @@ export const dataAccessApi = () => ({
     });
   },
 
-  saveCountryData: (countryData: CountryInterface): Promise<void> => {
-    return connectDb().then((db) => {
-      return updateData(
-        db,
-        COLLECTIONS.COUNTIRES,
-        { _id: countryData._id },
-        countryData,
-      );
-    });
+  saveCountryData: async (countryData: CountryInterface): Promise<void> => {
+    const db = await connectDb();
+    const holidayData = await dataAccessApi()
+      .getGeneralData<HolidayInterface>(COLLECTIONS.HOLIDAYS);
+    holidayData.filter((holiday) => holiday.country._id === countryData._id)
+      .forEach((holiday) => (
+        updateData(
+          db,
+          COLLECTIONS.HOLIDAYS,
+          { _id: holiday._id },
+          {
+            ...holiday,
+            country: countryData,
+          },
+        )
+      ));
+    return updateData(
+      db,
+      COLLECTIONS.COUNTIRES,
+      { _id: countryData._id },
+      countryData,
+    );
   },
 
   createNewCountry: (countryData: CountryInterface): Promise<void> => {
