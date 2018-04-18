@@ -3,20 +3,16 @@ import {
 } from '@chrisb-dev/holiday-shared-models';
 
 export const TEMPERATURES: {[key: string]: TemperatureInterface} = {
-  LESS_THAN_TEN: {
+  ANY_TEMPERATURE: {
     _id: '0',
-    name: '< 10 degrees',
+    name: 'Any temperature',
   },
-  TEN_TO_TWENTY: {
+  HOT_ONLY: {
     _id: '1',
-    name: '10-20 degrees',
+    name: 'I only like it hot',
   },
-  THIRTY_PLUS: {
+  WARM: {
     _id: '2',
-    name: '30 plus',
-  },
-  TWENTY_TO_THIRTY: {
-    _id: '3',
-    name: '20-30 degrees',
+    name: 'I atleast want it warm',
   },
 };

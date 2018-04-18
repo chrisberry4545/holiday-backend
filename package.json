@@ -27,7 +27,8 @@
     "start": "ts-node ./src/index.ts",
     "dev": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/index.ts",
     "lint": "./node_modules/.bin/tslint -c tslint.json 'src/**/*.ts'",
-    "init-db": "./node_modules/.bin/ts-node ./src/db/init-db/index.ts"
+    "init-db": "./node_modules/.bin/ts-node ./src/db/init-db/index.ts",
+    "update-fields": "./node_modules/.bin/ts-node ./src/db/init-db/update-fields.ts"
   },
   "author": "Chris Berry <chrisberry4545@googlemail.com> (http://chrisbdev.com)",
   "license": "ISC"

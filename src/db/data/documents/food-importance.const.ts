@@ -5,7 +5,7 @@ import {
 export const FOOD_IMPORTANCE: {[key: string]: FoodImportanceInterface} = {
   NOT_IMPORTANT: {
     _id: '1',
-    name: 'Not important',
+    name: 'I\'ll eat anything',
     value: 0,
   },
   SOMEWHAT_IMPORTANT: {
