@@ -10,6 +10,7 @@ import {
   FlightTimesInterface,
   FoodImportanceInterface,
   HolidayInterface,
+  TemperatureInterface,
   UserInputInterface,
 } from '@chrisb-dev/holiday-shared-models';
 
@@ -18,6 +19,9 @@ import {
   connectDb,
   readDataWithCache,
 } from './../db';
+
+const maxScorePerSection = 1000;
+
 export const holidayResultsApi = () => ({
 
   calculateCost(
@@ -27,7 +31,8 @@ export const holidayResultsApi = () => ({
   },
 
   /**
-   * If holiday is within cost range we should add 300 to the score.
+   * If holiday is within cost range we should give a maximum score to the
+   * score. Otherwise 0.
    */
   async getCostScore(
     holiday: HolidayInterface,
@@ -42,28 +47,43 @@ export const holidayResultsApi = () => ({
       possibleCostRange._id === userInput.selectedCostRangeId
     ));
     const holidayCost = holidayResultsApi().calculateCost(holiday);
-    return costRange && holidayCost < costRange.maxCost ? 300 : 0;
+    return costRange && holidayCost < costRange.maxCost ?
+      maxScorePerSection
+      :
+      0;
   },
 
   /**
-   * Give holiday 100 points for each matching activity
+   * Give holiday points for each matching activity.
+   * Maximum score if more than 50% of total activities matched.
    */
-  getActivityScore(
+  async getActivityScore(
     holiday: HolidayInterface,
     userInput: UserInputInterface,
+    db: Db,
   ) {
+    const activityReads =
+      await readDataWithCache<FoodImportanceInterface>(
+        db, COLLECTIONS.COST_RANGES,
+      );
     const holidayActivityCategoryIds =
     holiday.activities.map((activity) => activity._id);
     const matchingActivitiesCount = holidayActivityCategoryIds
       .filter((id) => (
         userInput.selectedActivityTypeIds.includes(id)
       )).length;
+    const totalActivities = activityReads.length;
+    const percentOfTotalActivitesMatched =
+      matchingActivitiesCount / totalActivities;
+    const maxActivitiesToMatch = 2;
 
-    return matchingActivitiesCount * 100;
+    return Math.min(
+      percentOfTotalActivitesMatched * maxActivitiesToMatch, 1,
+    ) * maxScorePerSection;
   },
 
   /**
-   * Maximum score increase of 300
+   * Gets a score out of max score for the food
    */
   async getFoodScore(
     holiday: HolidayInterface,
@@ -72,34 +92,54 @@ export const holidayResultsApi = () => ({
   ) {
     const foodImportanceRead =
       await readDataWithCache<FoodImportanceInterface>(
-        db, COLLECTIONS.COST_RANGES,
+        db, COLLECTIONS.FOOD_IMPORTANCE,
       );
     const userFoodImportance = foodImportanceRead.find((foodImportance) => (
       foodImportance._id === userInput.selectedFoodImportanceId
     ));
-    const holidayFoodScoreOutOf100 = holiday.country.foodScore * 10;
-    return holidayFoodScoreOutOf100 * (
-      (userFoodImportance && userFoodImportance.value) || 1
+    const maxFoodScore = 10;
+    const maxFoodImportance = Math.max(
+      ...foodImportanceRead.map((foodImportance) => foodImportance.value),
     );
+
+    const countryFoodPercent = holiday.country.foodScore / maxFoodScore;
+    const userFoodRatingPercent = (
+      (userFoodImportance && userFoodImportance.value) || 1
+    ) / maxFoodImportance;
+
+    return countryFoodPercent * userFoodRatingPercent * maxScorePerSection;
   },
 
   /**
-   * Increases holiday score by 150 if temperature equals the one the user
+   * Increases holiday score by amount if temperature equals the one the user
    * wants.
    */
-  getTemperatureScore(
+  async getTemperatureScore(
     holiday: HolidayInterface,
     userInput: UserInputInterface,
+    db: Db,
   ) {
+    const temperaturesRead =
+      await readDataWithCache<TemperatureInterface>(
+        db,
+        COLLECTIONS.TEMPERATURE,
+      );
     const temperatureIdForMonthOfTravel =
       holiday.country.monthlyTemperatures[userInput.selectedMonthNumber];
-    return temperatureIdForMonthOfTravel &&
-      userInput.selectedTemperatureId === temperatureIdForMonthOfTravel._id
-      ? 150 : 0;
+    const userSelectedTemperature = temperaturesRead.find((temperature) => (
+      temperature._id === userInput.selectedTemperatureId
+    ));
+
+    return temperatureIdForMonthOfTravel && userSelectedTemperature &&
+      userSelectedTemperature.minValue >= temperatureIdForMonthOfTravel.minValue
+      ?
+      maxScorePerSection
+      :
+      0;
   },
 
   /**
-   * If holiday is within the flight time we should add 300 to the score
+   * If holiday is within the flight time we should add the max score
    */
   async getFlightTimesScore(
     holiday: HolidayInterface,
@@ -114,10 +154,11 @@ export const holidayResultsApi = () => ({
       flighTime._id === userInput.selectedFlightTimeId
     ));
     return userFlightTime &&
-      holiday.flight.flightTime.timeMaxMinutes <
-      userFlightTime.timeMaxMinutes
+      holiday.flight.flightTime.timeMaxMinutes < userFlightTime.timeMaxMinutes
       ?
-      300 : 0;
+      maxScorePerSection
+      :
+      0;
   },
 
   async scoreHoliday(
@@ -125,17 +166,17 @@ export const holidayResultsApi = () => ({
     userInput: UserInputInterface,
     db: Db,
   ): Promise<number> {
-    const activityScore = holidayResultsApi().getActivityScore(
-      holiday,
-      userInput,
-    );
-
-    const temperatureScore = holidayResultsApi().getTemperatureScore(
-      holiday,
-      userInput,
-    );
-
     return Promise.all([
+      holidayResultsApi().getActivityScore(
+        holiday,
+        userInput,
+        db,
+      ),
+      holidayResultsApi().getTemperatureScore(
+        holiday,
+        userInput,
+        db,
+      ),
       holidayResultsApi().getFoodScore(
         holiday,
         userInput,
@@ -151,7 +192,13 @@ export const holidayResultsApi = () => ({
         userInput,
         db,
       ),
-    ]).then(([foodScore, flightScore, costScore]) => {
+    ]).then(([
+      activityScore,
+      temperatureScore,
+      foodScore,
+      flightScore,
+      costScore,
+    ]) => {
       return activityScore
         + temperatureScore
         + foodScore
