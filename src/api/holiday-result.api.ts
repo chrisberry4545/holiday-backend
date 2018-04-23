@@ -15,6 +15,7 @@ import {
 } from '@chrisb-dev/holiday-shared-models';
 
 import {
+  BADGES,
   COLLECTIONS,
   connectDb,
   readDataWithCache,
@@ -23,6 +24,19 @@ import {
 const maxScorePerSection = 1000;
 
 export const holidayResultsApi = () => ({
+
+  getBadgeFromScore(
+    score: number,
+  ) {
+    return score === maxScorePerSection ?
+      BADGES.PERFECT
+      :
+      score >= maxScorePerSection * 2 / 3
+      ?
+      BADGES.GOOD
+      :
+      null;
+  },
 
   calculateCost(
     holiday: HolidayInterface,
@@ -165,7 +179,7 @@ export const holidayResultsApi = () => ({
     holiday: HolidayInterface,
     userInput: UserInputInterface,
     db: Db,
-  ): Promise<number> {
+  ) {
     return Promise.all([
       holidayResultsApi().getActivityScore(
         holiday,
@@ -199,11 +213,21 @@ export const holidayResultsApi = () => ({
       flightScore,
       costScore,
     ]) => {
-      return activityScore
-        + temperatureScore
-        + foodScore
-        + flightScore
-        + costScore;
+      const getBadgeFromScore = holidayResultsApi().getBadgeFromScore;
+      return {
+        badges: {
+          activity: getBadgeFromScore(activityScore),
+          cost: getBadgeFromScore(costScore),
+          flight: getBadgeFromScore(flightScore),
+          food: getBadgeFromScore(foodScore),
+          temperature: getBadgeFromScore(temperatureScore),
+        },
+        score: activityScore
+          + temperatureScore
+          + foodScore
+          + flightScore
+          + costScore,
+      };
     });
   },
 
@@ -212,14 +236,21 @@ export const holidayResultsApi = () => ({
     userInput: UserInputInterface,
     db: Db,
   ): Promise<HolidayInterface[]> {
-    const promiseMap = holidays.map(async (holiday) => ({
-      ...holiday,
-      score: await holidayResultsApi().scoreHoliday(
+    const promiseMap = holidays.map(async (holiday) => {
+      const {
+        badges,
+        score,
+      } = await holidayResultsApi().scoreHoliday(
         holiday,
         userInput,
         db,
-      ),
-    }));
+      );
+      return {
+        ...holiday,
+        badges,
+        score,
+      };
+    });
     return Promise.all(promiseMap).then((results) => {
       return results.sort((a, b) => a.score > b.score ? -1 : 1);
     });
