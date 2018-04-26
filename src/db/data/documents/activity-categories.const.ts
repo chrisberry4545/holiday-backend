@@ -11,9 +11,17 @@ export const ACTIVITY_CATEGORIES: {[key: string]: ActivityCategoryInterface} = {
     _id: '2',
     name: 'Beach',
   },
+  CHILD_FRIENDLY: {
+    _id: '5',
+    name: 'Child friendly',
+  },
   CULTURE: {
     _id: '3',
     name: 'Culture',
+  },
+  NATURE: {
+    _id: '6',
+    name: 'Nature',
   },
   SPORTS: {
     _id: '4',

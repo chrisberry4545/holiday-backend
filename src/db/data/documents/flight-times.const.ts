@@ -20,14 +20,14 @@ export const FLIGHT_TIMES: {[key: string]: FlightTimesInterface} = {
   // tslint:disable-next-line
   LESS_THAN_SIX: {
     _id: '2',
-    name: 'Less than 6',
+    name: 'Less than 6 hours',
     timeMaxMinutes: flightTimes[2],
     timeMinMinutes: flightTimes[1],
   },
   // tslint:disable-next-line
   LESS_THAN_TWELVE: {
     _id: '3',
-    name: 'Less than 12',
+    name: 'Less than 12 hours',
     timeMaxMinutes: flightTimes[3],
     timeMinMinutes: flightTimes[2],
   },
